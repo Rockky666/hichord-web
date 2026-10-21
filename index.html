@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#191b19" />
+    <meta
+      name="description"
+      content="Семь кнопок. Бесконечно много музыки. Браузерный аккордовый синтезатор с эффектами и записью."
+    />
+    <title>HiChord — Pocket Studio</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23d9ed85'/%3E%3Cpath d='M18 16v32m28-32v32M18 32h28' stroke='%23191b19' stroke-width='8'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="HiChord главная"
+        >HiChord<span>POCKET STUDIO</span></a
+      >
+      <div class="top-actions">
+        <span id="audio-status"><i></i> Звук готов к запуску</span
+        ><button id="help" class="quiet">
+          Как играть <span class="keycap">?</span>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <div class="eyebrow">
+            <span class="live-dot"></span> МАЛЕНЬКИЙ ИНСТРУМЕНТ. БОЛЬШИЕ ИДЕИ.
+          </div>
+          <h1>Поймай свой <em>звук.</em></h1>
+          <p>Семь кнопок, тысячи мелодий. Просто начни играть.</p>
+        </div>
+        <button class="demo-button" id="demo">
+          <span>▷</span> Послушать демо
+        </button>
+      </section>
+      <div class="workspace">
+        <section class="instrument-area" aria-label="Инструмент HiChord">
+          <div class="section-line">
+            <span><i class="live-dot"></i> ИНСТРУМЕНТ</span
+            ><span>WEB EDITION <span class="version">01</span></span>
+          </div>
+          <div class="device-stage">
+            <div class="device">
+              <div class="hardware-side">
+                <div class="hardware-brand">HiChord</div>
+                <div class="speaker" aria-hidden="true"></div>
+                <div class="joystick-wrap" id="joystick-wrap">
+                  <div
+                    id="joystick"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Джойстик: потяните для изменения аккорда, нажмите для записи"
+                  >
+                    <span></span>
+                  </div>
+                  <span class="stick-dot d1"></span
+                  ><span class="stick-dot d2"></span
+                  ><span class="stick-dot d3"></span
+                  ><span class="stick-dot d4"></span
+                  ><span class="stick-dot d5"></span
+                  ><span class="stick-dot d6"></span
+                  ><span class="stick-dot d7"></span
+                  ><span class="stick-dot d8"></span>
+                </div>
+                <div class="hardware-caption">
+                  Chord Synthesizer<br /><strong>POCKET AUDIO</strong>
+                </div>
+              </div>
+              <div class="hardware-main">
+                <div class="hardware-top">
+                  <div class="oled" aria-live="polite">
+                    <div>
+                      <span id="screen-mode">PLAY</span
+                      ><span id="screen-bpm">100</span>
+                    </div>
+                    <strong id="screen-chord">Cmaj</strong
+                    ><span id="screen-sound">WARM KEYS</span>
+                    <div class="oled-bars" aria-hidden="true">
+                      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                      ><i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                  </div>
+                  <button
+                    class="hardware-menu gray"
+                    data-panel="key"
+                    aria-label="Тональность и октава"
+                  >
+                    <svg viewBox="0 0 32 32">
+                      <circle cx="12" cy="20" r="6" />
+                      <path d="m16 16 11-11m-5 5 4 4m-1-7 3 3" /></svg
+                    ><span>KEY</span></button
+                  ><button
+                    class="hardware-menu yellow"
+                    data-panel="sound"
+                    aria-label="Тембр и эффекты"
+                  >
+                    <svg viewBox="0 0 32 32">
+                      <path d="M3 20h5V9h6v17h6V14h9" /></svg
+                    ><span>SOUND</span></button
+                  ><button
+                    class="hardware-menu red"
+                    data-panel="mode"
+                    aria-label="Режим игры и темп"
+                  >
+                    <svg viewBox="0 0 32 32">
+                      <circle cx="16" cy="16" r="11" />
+                      <path d="M16 8v9l6-3" /></svg
+                    ><span>MODE</span>
+                  </button>
+                </div>
+                <div class="pads" id="pads"></div>
+              </div>
+              <div class="device-screw screw-a"></div>
+              <div class="device-screw screw-b"></div>
+            </div>
+          </div>
+          <div class="instrument-bottom">
+            <label class="volume"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M3 9h4l5-4v14l-5-4H3zM16 8c3 2 3 6 0 8m3-11c5 4 5 10 0 14"
+                /></svg
+              ><input
+                id="volume"
+                aria-label="Громкость"
+                type="range"
+                min="0"
+                max="100"
+                value="65"
+              /><output id="volume-value">65%</output></label
+            ><span class="keyboard-hint"
+              ><span class="keycap">1</span> —
+              <span class="keycap">7</span> аккорды
+              <span class="hint-divider">/</span>
+              <span class="keycap">↑↓←→</span> джойстик</span
+            >
+          </div>
+          <div class="tips-line">
+            <span>✦</span> Попробуй
+            <button
+              class="progression"
+              id="progression"
+              title="Послушать последовательность"
+            >
+              C → G → Am → F</button
+            ><span class="tip-text">— всё уже звучит вместе.</span
+            ><button
+              id="panic"
+              class="quiet"
+              title="Остановить все звуки (Esc)"
+            >
+              Стоп <span class="keycap">esc</span>
+            </button>
+          </div>
+        </section>
+        <aside class="settings" aria-label="Настройки синтезатора">
+          <div class="section-line">
+            <span>ТВОЙ ЗВУК</span
+            ><button id="reset" class="quiet" title="Сбросить настройки">
+              ↺ Сброс
+            </button>
+          </div>
+          <div class="settings-tabs" role="tablist">
+            <button
+              id="tab-key"
+              data-panel="key"
+              role="tab"
+              aria-selected="false"
+            >
+              Тональность</button
+            ><button
+              id="tab-sound"
+              data-panel="sound"
+              class="selected"
+              role="tab"
+              aria-selected="true"
+            >
+              Звук</button
+            ><button
+              id="tab-mode"
+              data-panel="mode"
+              role="tab"
+              aria-selected="false"
+            >
+              Режим
+            </button>
+          </div>
+          <section
+            id="panel-sound"
+            class="settings-panel"
+            role="tabpanel"
+            aria-labelledby="tab-sound"
+          >
+            <div class="label-row">
+              <label for="sound">ТЕМБР</label
+              ><span id="sound-number">01 / 12</span>
+            </div>
+            <select id="sound"></select>
+            <div id="sound-description" class="field-note">
+              Мягкие клавиши с тёплым FM-звучанием.
+            </div>
+            <div class="subheading">ПРОСТРАНСТВО</div>
+            <div class="effect-row">
+              <label for="reverb"
+                ><span class="effect-icon">◌</span> Реверберация</label
+              ><output id="reverb-value">28%</output
+              ><input id="reverb" type="range" min="0" max="100" value="28" />
+            </div>
+            <div class="effect-row">
+              <label for="delay"><span class="effect-icon">≋</span> Дилей</label
+              ><output id="delay-value">16%</output
+              ><input id="delay" type="range" min="0" max="75" value="16" />
+            </div>
+            <div class="effect-row">
+              <label for="filter"
+                ><span class="effect-icon">⌁</span> Фильтр</label
+              ><output id="filter-value">8.0 kHz</output
+              ><input
+                id="filter"
+                type="range"
+                min="200"
+                max="16000"
+                step="100"
+                value="8000"
+              />
+            </div>
+            <details class="more-controls">
+              <summary>Огибающая и модуляция <span>＋</span></summary>
+              <label
+                >Атака
+                <input
+                  id="attack"
+                  type="range"
+                  min="0.005"
+                  max="1.5"
+                  step="0.005"
+                  value="0.015" /></label
+              ><label
+                >Затухание
+                <input
+                  id="release"
+                  type="range"
+                  min="0.05"
+                  max="3"
+                  step="0.05"
+                  value="0.6" /></label
+              ><label
+                >Хорус
+                <input
+                  id="chorus"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="0" /></label
+              ><label
+                >Тремоло
+                <input id="tremolo" type="range" min="0" max="100" value="0"
+              /></label>
+            </details>
+          </section>
+          <section
+            id="panel-key"
+            class="settings-panel"
+            role="tabpanel"
+            aria-labelledby="tab-key"
+            hidden
+          >
+            <div class="label-row">
+              <label for="key">ТОНАЛЬНОСТЬ</label><span>12 KEYS</span>
+            </div>
+            <select id="key"></select>
+            <div class="subheading">ЛАД</div>
+            <div class="segmented" id="scale-buttons">
+              <button data-scale="major" class="selected">Мажор</button
+              ><button data-scale="minor">Минор</button>
+            </div>
+            <div class="subheading">ОКТАВА</div>
+            <div class="stepper">
+              <button id="oct-down" aria-label="Октава ниже">−</button
+              ><output id="octave">0</output
+              ><button id="oct-up" aria-label="Октава выше">＋</button>
+            </div>
+            <div class="subheading">ОКРАСКА АККОРДА</div>
+            <select id="voicing">
+              <option value="base">Обычный трезвучный</option>
+              <option value="flip">Major ↔ Minor</option>
+              <option value="seventh">Maj7 / min7</option>
+              <option value="ninth">Maj9 / min9</option>
+              <option value="dom">Dominant 7</option>
+              <option value="sus4">Sus4</option>
+              <option value="sixth">6th / Sus2</option>
+              <option value="dim">Diminished</option>
+              <option value="aug">Augmented</option>
+            </select>
+            <div class="subheading">ОБРАЩЕНИЕ</div>
+            <div class="segmented" id="inversions">
+              <button data-inversion="0" class="selected">Основное</button
+              ><button data-inversion="1">1-е</button
+              ><button data-inversion="2">2-е</button>
+            </div>
+            <label class="check-row"
+              ><input id="bass" type="checkbox" /> Добавить бас</label
+            >
+          </section>
+          <section
+            id="panel-mode"
+            class="settings-panel"
+            role="tabpanel"
+            aria-labelledby="tab-mode"
+            hidden
+          >
+            <div class="label-row">
+              <label for="mode">РЕЖИМ ИГРЫ</label><span>PLAY YOUR WAY</span>
+            </div>
+            <select id="mode"></select>
+            <div id="mode-description" class="field-note"></div>
+            <div class="subheading">ТЕМП</div>
+            <div class="tempo">
+              <input
+                id="bpm"
+                type="number"
+                min="40"
+                max="300"
+                value="100"
+                aria-label="Темп BPM"
+              /><span>BPM</span><button id="tap" class="quiet">TAP</button>
+            </div>
+            <label class="check-row"
+              ><input id="metronome" type="checkbox" /> Метроном</label
+            >
+            <div class="subheading">ДЛИТЕЛЬНОСТЬ ШАГА</div>
+            <select id="rate">
+              <option value="1">1/4 — четверть</option>
+              <option value="2" selected>1/8 — восьмая</option>
+              <option value="4">1/16 — шестнадцатая</option>
+            </select>
+            <div class="subheading">АРПЕДЖИО</div>
+            <select id="arp-pattern">
+              <option value="up">Вверх</option>
+              <option value="down">Вниз</option>
+              <option value="updown">Вверх / вниз</option>
+              <option value="random">Случайно</option></select
+            ><label class="check-row"
+              ><input id="latch" type="checkbox" /> Удерживать после
+              отпускания</label
+            ><button id="midi" class="secondary wide">Подключить MIDI</button>
+          </section>
+        </aside>
+      </div>
+      <section class="recorder" aria-label="Запись мелодии">
+        <div class="recorder-header">
+          <div>
+            <span class="section-title">ТВОЯ МЕЛОДИЯ</span
+            ><span class="recording-badge" id="recording-badge"
+              >ГОТОВ К ЗАПИСИ</span
+            >
+          </div>
+          <div class="record-actions">
+            <button
+              id="loop"
+              class="quiet"
+              aria-pressed="false"
+              title="Зациклить воспроизведение"
+            >
+              ↻ <span>Цикл</span></button
+            ><button id="export" class="quiet" disabled>↓ Скачать WAV</button>
+          </div>
+        </div>
+        <div class="transport">
+          <button id="record" class="record-button">
+            <i></i><span>Запись</span></button
+          ><button
+            id="play"
+            class="play-button"
+            disabled
+            aria-label="Воспроизвести запись"
+          >
+            ▶</button
+          ><button
+            id="stop"
+            class="stop-button"
+            aria-label="Остановить запись или воспроизведение"
+          >
+            ■
+          </button>
+          <div class="time">
+            <span id="time">00:00</span><small id="time-ms">.0</small>
+          </div>
+          <div class="timeline" id="timeline">
+            <canvas id="waveform" aria-label="Звуковая волна записи"></canvas>
+            <div id="empty-recording">
+              Здесь начнётся твоя следующая мелодия
+            </div>
+            <div id="playhead"></div>
+          </div>
+          <span class="record-shortcut"
+            ><span class="keycap">R</span> запись</span
+          >
+        </div>
+        <div id="tracks" class="tracks"></div>
+        <div class="recorder-footer">
+          <span
+            ><i class="local-dot"></i> Запись остаётся в этом браузере · до 6
+            дорожек</span
+          ><button id="clear-recording" class="quiet" disabled>Очистить</button>
+        </div>
+      </section>
+      <section class="extra-panel" id="extra-panel" hidden>
+        <div class="section-line">
+          <span id="extra-title">СЕКВЕНСОР</span><span id="extra-status"></span>
+        </div>
+        <div id="extra-content"></div>
+      </section>
+      <footer>
+        <span>Сделано для моментов, когда хочется играть.</span
+        ><span
+          >Наушники сделают этот момент лучше
+          <span class="headphones">♧</span></span
+        ><a
+          href="https://updater.hichord.shop/manual/"
+          target="_blank"
+          rel="noreferrer"
+          >Вдохновлено HiChord ↗</a
+        >
+      </footer>
+    </main>
+    <dialog id="help-dialog">
+      <button class="dialog-close" id="close-help" aria-label="Закрыть">
+        ×
+      </button>
+      <div class="eyebrow">ТВОЯ КАРМАННАЯ СТУДИЯ</div>
+      <h2>Музыка начинается<br />с одного нажатия.</h2>
+      <p>
+        Нажимай и удерживай светлые кнопки мышью, касанием или клавишами
+        <b>1–7</b>. Первый аккорд включит звук.
+      </p>
+      <div class="help-grid">
+        <span class="keycap">↑ ↓ ← →</span
+        ><span
+          >Меняют окраску аккорда. Потяни круглый джойстик для диагональных
+          направлений.</span
+        ><span class="keycap">R</span
+        ><span
+          >Начать и закончить запись. Следующая запись добавляет дорожку к
+          первой.</span
+        ><span class="keycap">Space</span
+        ><span>Воспроизвести / остановить запись.</span
+        ><span class="keycap">Esc</span><span>Остановить все звуки.</span>
+      </div>
+      <p>
+        Серый, жёлтый и красный переключатели открывают тональность, звук и
+        режим. Попробуй Strum, Arp или Drums.
+      </p>
+      <p class="fine-print">
+        Независимая веб-адаптация. Тембры создаются Web Audio, без оригинальных
+        семплов и прошивки Pocket Audio. Аппаратные функции USB-аудио, TRS и
+        вокодер не эмулируются. Записи сохраняются локально в IndexedDB; WAV
+        можно скачать.
+      </p>
+      <button id="start-playing" class="primary wide">Давай играть →</button>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
